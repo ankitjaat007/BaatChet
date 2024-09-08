@@ -17,10 +17,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'BaatChit',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
+        appBarTheme:
+            AppBarTheme(color: const Color.fromARGB(255, 129, 185, 222)),
+        scaffoldBackgroundColor: const Color.fromARGB(255, 206, 195, 194),
       ),
       home: HomeScreen(),
     );
