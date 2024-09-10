@@ -21,10 +21,10 @@ class MyApp extends StatelessWidget {
       title: 'BaatChit',
       theme: ThemeData(
         appBarTheme:
-            AppBarTheme(color: const Color.fromARGB(255, 129, 185, 222)),
+            const AppBarTheme(color: Color.fromARGB(255, 129, 185, 222)),
         scaffoldBackgroundColor: const Color.fromARGB(255, 206, 195, 194),
       ),
-      home: HomeScreen(),
+      home: const HomeScreen(),
     );
   }
 }

@@ -1,11 +1,59 @@
 import 'package:baatchit/model/chat_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
-class ChatScreen extends StatelessWidget {
+class ChatScreen extends StatefulWidget {
   ChatScreen({super.key});
 
+  @override
+  State<ChatScreen> createState() => _ChatScreenState();
+}
+
+class _ChatScreenState extends State<ChatScreen> {
   final messageController = TextEditingController();
+
+  final _database = FirebaseDatabase.instance;
+
+  List<Map> allMsg = [];
+
+  final event = FirebaseDatabase.instance.ref("Chats");
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    initializeChat();
+  }
+
+  initializeChat() {
+    event.onChildAdded.listen((event) {
+      final msg = event.snapshot.value as Map<Object?, Object?>;
+      if (mounted) setState(() => allMsg.add(msg));
+    });
+
+    event.onChildChanged.listen((event) {
+      final res = event.snapshot.value.toString();
+      final id = event.snapshot.key.toString();
+      print(res);
+      print(id);
+    });
+
+    event.onChildRemoved.listen((event) {
+      print(event.snapshot.key);
+    });
+  }
+
+  void sendMessage() {
+    final newMsg = {
+      "msg": "Let's have a talk",
+      "sender": "Sachin",
+      "time": DateTime.now().toIso8601String()
+    };
+    event.push().set(newMsg);
+  }
+
   // List<String> msg = [];
   @override
   Widget build(BuildContext context) {
@@ -23,65 +71,83 @@ class ChatScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text("Group chat"),
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: StreamBuilder(
-                stream: FirebaseFirestore.instance
-                    .collection('chats')
-                    .orderBy('timestamp', descending: true)
-                    .snapshots(),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  } else if (snapshot.hasError) {
-                    return Center(
-                      child: Text("Error: ${snapshot.error}"),
-                    );
-                  } else if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-                    return const Center(child: Text('No data found'));
-                  } else {
-                    final chatDocs = snapshot.data!.docs;
-                    return ListView.builder(
-                      reverse: true,
-                      itemCount: chatDocs.length,
-                      itemBuilder: (ctx, index) {
-                        return Row(
-                          mainAxisAlignment:
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10),
+        child: Column(
+          children: [
+            // TextButton(onPressed: sendMessage, child: Text("Send Now")),
+
+            // ...List.generate(allMsg.length, (i) {
+            //   final message = allMsg[i];
+            //   return Container(
+            //     decoration: BoxDecoration(
+            //       borderRadius: BorderRadius.circular(10),
+            //     ),
+            //     child: Text(message['msg']),
+            //   );
+            // })
+            Expanded(
+              child: StreamBuilder(
+                  stream: FirebaseFirestore.instance
+                      .collection('chats')
+                      .orderBy('timestamp', descending: true)
+                      .snapshots(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    } else if (snapshot.hasError) {
+                      return Center(
+                        child: Text("Error: ${snapshot.error}"),
+                      );
+                    } else if (!snapshot.hasData ||
+                        snapshot.data!.docs.isEmpty) {
+                      return const Center(child: Text('No data found'));
+                    } else {
+                      final chatDocs = snapshot.data!.docs;
+                      return ListView.builder(
+                        reverse: true,
+                        itemCount: chatDocs.length,
+                        itemBuilder: (ctx, index) {
+                          return Row(
+                            mainAxisAlignment:
+                                chatDocs[index]['sender'] == "ankit"
+                                    ? MainAxisAlignment.end
+                                    : MainAxisAlignment.start,
+                            children: [
                               chatDocs[index]['sender'] == "ankit"
-                                  ? MainAxisAlignment.end
-                                  : MainAxisAlignment.start,
-                          children: [
-                            chatDocs[index]['sender'] == "ankit"
-                                ? Chip(
-                                    label: Text(chatDocs[index]['message']),
-                                  )
-                                : Chip(
-                                    label: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(chatDocs[index]['message']),
-                                        Text(
-                                          chatDocs[index]['sender'],
-                                          style: const TextStyle(
-                                              fontSize: 10,
-                                              fontWeight: FontWeight.w200,
-                                              color: Colors.grey),
-                                        )
-                                      ],
+                                  ? Chip(
+                                      label: Text(chatDocs[index]['message']),
+                                    )
+                                  : Padding(
+                                      padding: const EdgeInsets.only(top: 2),
+                                      child: Chip(
+                                        label: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(chatDocs[index]['message']),
+                                            Text(
+                                              chatDocs[index]['sender'],
+                                              style: const TextStyle(
+                                                  fontSize: 10,
+                                                  fontWeight: FontWeight.w200,
+                                                  color: Colors.grey),
+                                            )
+                                          ],
+                                        ),
+                                      ),
                                     ),
-                                  ),
-                          ],
-                        );
-                      },
-                    );
-                  }
-                }),
-          )
-        ],
+                            ],
+                          );
+                        },
+                      );
+                    }
+                  }),
+            )
+          ],
+        ),
       ),
       bottomNavigationBar: Padding(
         padding:
