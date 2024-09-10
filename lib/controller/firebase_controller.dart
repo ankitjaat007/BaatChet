@@ -19,6 +19,9 @@ class ChatController extends ChangeNotifier {
   List<Map> get allMsg => _allMsg;
 
   addMsg(DatabaseEvent event) {
+    final msg = event.snapshot.value as Map;
+    _allMsg.add(msg);
+
     notifyListeners();
   }
 }

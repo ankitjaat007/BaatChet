@@ -3,17 +3,17 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
-class ChatScreen extends StatefulWidget {
-  ChatScreen({super.key});
+class StreamBuilderChat extends StatefulWidget {
+  StreamBuilderChat({super.key});
 
   @override
-  State<ChatScreen> createState() => _ChatScreenState();
+  State<StreamBuilderChat> createState() => _StreamBuilderChatState();
 }
 
-class _ChatScreenState extends State<ChatScreen> {
+class _StreamBuilderChatState extends State<StreamBuilderChat> {
   final messageController = TextEditingController();
 
-  final _database = FirebaseDatabase.instance;
+  // final _database = FirebaseDatabase.instance;
 
   List<Map> allMsg = [];
 

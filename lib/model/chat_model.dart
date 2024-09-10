@@ -15,7 +15,7 @@ class ChatModel {
     return {
       "message": message ?? "",
       "sender": "ankit",
-      "timestamp": DateTime.now()
+      "timestamp": DateTime.now().toIso8601String()
     };
   }
 }

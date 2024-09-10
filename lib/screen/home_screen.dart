@@ -1,6 +1,8 @@
+import 'package:baatchit/controller/firebase_controller.dart';
 import 'package:baatchit/screen/realtime_chat.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -10,11 +12,17 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final event = FirebaseDatabase.instance.ref("Chats");
+  @override
+  void initState() {
+    super.initState();
+    initializeChat();
+  }
+
+  final event = FirebaseDatabase.instance.ref("maingroup");
   initializeChat() {
-    // final chatController = Provider.of<ChatController>(context, listen:false);
-    event.onChildAdded.listen((event) {
-      // chatController.addMsg(event);
+    final chatController = Provider.of<ChatController>(context, listen: false);
+    event.onChildAdded.listen((data) {
+      chatController.addMsg(data);
     });
 
     event.onChildChanged.listen((event) {});

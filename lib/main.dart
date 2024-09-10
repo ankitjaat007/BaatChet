@@ -1,7 +1,9 @@
+import 'package:baatchit/controller/firebase_controller.dart';
 import 'package:baatchit/firebase_options.dart';
 import 'package:baatchit/screen/home_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,15 +18,20 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'BaatChit',
-      theme: ThemeData(
-        appBarTheme:
-            const AppBarTheme(color: Color.fromARGB(255, 129, 185, 222)),
-        scaffoldBackgroundColor: const Color.fromARGB(255, 206, 195, 194),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => ChatController())
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'BaatChit',
+        theme: ThemeData(
+          appBarTheme:
+              const AppBarTheme(color: Color.fromARGB(255, 129, 185, 222)),
+          scaffoldBackgroundColor: const Color.fromARGB(255, 206, 195, 194),
+        ),
+        home: const HomeScreen(),
       ),
-      home: const HomeScreen(),
     );
   }
 }
