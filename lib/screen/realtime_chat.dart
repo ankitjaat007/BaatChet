@@ -1,6 +1,6 @@
+import 'package:baatchit/components/showbottomSheet.dart';
 import 'package:baatchit/controller/firebase_controller.dart';
-import 'package:baatchit/model/chat_model.dart';
-import 'package:firebase_database/firebase_database.dart';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -8,55 +8,62 @@ class RealtimeChat extends StatelessWidget {
   RealtimeChat({super.key});
 
   final messageController = TextEditingController();
+  // final updateController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
-    final chat = Provider.of<ChatController>(context).allMsg;
+    final provider = Provider.of<ChatController>(context);
+    final chat = provider.allMsg;
 
     return Scaffold(
       appBar: AppBar(
         title: const Text("Group chat"),
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          ListView.builder(
-            shrinkWrap: true,
-            padding: EdgeInsets.only(
-                bottom: MediaQuery.of(context).viewInsets.bottom),
-            itemCount: chat.length,
-            itemBuilder: (context, index) {
-              return Row(
-                mainAxisAlignment: chat[index]['sender'] == "ankit"
-                    ? MainAxisAlignment.end
-                    : MainAxisAlignment.start,
-                children: [
-                  chat[index]['sender'] == "ankit"
-                      ? Chip(
-                          label: Text(chat[index]['message']),
+      body: ListView.builder(
+        padding:
+            EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+        itemCount: chat.length,
+        itemBuilder: (context, index) {
+          return Row(
+            mainAxisAlignment: chat[index].sender == "ankit"
+                ? MainAxisAlignment.end
+                : MainAxisAlignment.start,
+            children: [
+              if (chat[index].sender == "ankit")
+                InkWell(
+                  onLongPress: () {
+                    // updateController.text = chat[index].message.toString();
+                    voidfuncationClass().customBottomSheet(
+                        context,
+                        chat[index].msgId.toString(),
+                        chat[index].message.toString());
+                  },
+                  child: Chip(
+                    label: Text(chat[index].message.toString()),
+                  ),
+                )
+              else
+                Padding(
+                  padding: const EdgeInsets.only(top: 2),
+                  child: Chip(
+                    label: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(chat[index].message.toString()),
+                        Text(
+                          chat[index].message.toString(),
+                          style: const TextStyle(
+                              fontSize: 10,
+                              fontWeight: FontWeight.w200,
+                              color: Colors.grey),
                         )
-                      : Padding(
-                          padding: const EdgeInsets.only(top: 2),
-                          child: Chip(
-                            label: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(chat[index]['message']),
-                                Text(
-                                  chat[index]['sender'],
-                                  style: const TextStyle(
-                                      fontSize: 10,
-                                      fontWeight: FontWeight.w200,
-                                      color: Colors.grey),
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
-                ],
-              );
-            },
-          ),
-        ],
+                      ],
+                    ),
+                  ),
+                ),
+            ],
+          );
+        },
       ),
       bottomNavigationBar: Padding(
         padding:
@@ -87,7 +94,7 @@ class RealtimeChat extends StatelessWidget {
               CircleAvatar(
                 radius: 25,
                 child: IconButton(
-                    onPressed: _sendMsg,
+                    onPressed: () => provider.sendMsg(messageController),
                     icon: const Icon(Icons.keyboard_double_arrow_right_sharp)),
               )
             ],
@@ -97,13 +104,13 @@ class RealtimeChat extends StatelessWidget {
     );
   }
 
-  Future<void> _sendMsg() async {
-    final message = messageController.text;
-    if (message.trim().isEmpty) return;
-    await FirebaseDatabase.instance
-        .ref("maingroup")
-        .push()
-        .set(ChatModel(message: message).tomsg());
-    messageController.clear();
-  }
+//   Future<void> _sendMsg() async {
+//     final message = messageController.text;
+//     if (message.trim().isEmpty) return;
+//     await FirebaseDatabase.instance
+//         .ref("AnkitChats")
+//         .push()
+//         .set(ChatModel(message: message).tomsg());
+//     messageController.clear();
+//   }
 }

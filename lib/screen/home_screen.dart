@@ -18,16 +18,18 @@ class _HomeScreenState extends State<HomeScreen> {
     initializeChat();
   }
 
-  final event = FirebaseDatabase.instance.ref("maingroup");
+  // final event = FirebaseDatabase.instance.ref("AnkitChats");
   initializeChat() {
     final chatController = Provider.of<ChatController>(context, listen: false);
-    event.onChildAdded.listen((data) {
-      chatController.addMsg(data);
-    });
+    // event.onChildAdded.listen((data) {
+    //   chatController.addMsg(data);
+    // });
+    chatController.fatchMsg();
+    chatController.FatchUpdateData();
 
-    event.onChildChanged.listen((event) {});
+    // event.onChildChanged.listen((event) {});
 
-    event.onChildRemoved.listen((event) {});
+    // event.onChildRemoved.listen((event) {});
   }
 
   @override

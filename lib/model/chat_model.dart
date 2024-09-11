@@ -9,8 +9,8 @@ class ChatModel {
   //   };
   // }
 
-  String? message, sender, timestamp;
-  ChatModel({this.message, this.sender, this.timestamp});
+  String? message, sender, timestamp, msgId;
+  ChatModel({this.message, this.sender, this.timestamp, this.msgId});
   Map<String, dynamic> tomsg() {
     return {
       "message": message ?? "",
@@ -18,4 +18,9 @@ class ChatModel {
       "timestamp": DateTime.now().toIso8601String()
     };
   }
+
+  ChatModel.fromchat(Map json, this.msgId)
+      : message = json['message'],
+        sender = json['sender'],
+        timestamp = json['timestamp'];
 }
