@@ -50,7 +50,7 @@ class ChatController extends ChangeNotifier {
 // *******
 
 // fatch all msg on firebase those updated new
-  FatchUpdateData() {
+  fatchUpdateData() {
     try {
       event.onChildChanged.listen((data) {
         final msg = data.snapshot.value as Map;
@@ -79,4 +79,26 @@ class ChatController extends ChangeNotifier {
 
   // *****************************
   // *******
+
+// fatch all msg on firebase those updated new
+  fatchRemoveData() {
+    try {
+      event.onChildRemoved.listen((data) {
+        final id = data.snapshot.key.toString();
+        _allMsg.removeWhere((element) => element.msgId == id);
+        notifyListeners();
+      });
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  // update msg for me
+  removemsg(String msgId) {
+    try {
+      event.child(msgId).remove();
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

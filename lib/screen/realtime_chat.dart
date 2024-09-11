@@ -8,7 +8,6 @@ class RealtimeChat extends StatelessWidget {
   RealtimeChat({super.key});
 
   final messageController = TextEditingController();
-  // final updateController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -32,11 +31,31 @@ class RealtimeChat extends StatelessWidget {
               if (chat[index].sender == "ankit")
                 InkWell(
                   onLongPress: () {
-                    // updateController.text = chat[index].message.toString();
-                    voidfuncationClass().customBottomSheet(
-                        context,
-                        chat[index].msgId.toString(),
-                        chat[index].message.toString());
+                    showDialog(
+                      context: context,
+                      builder: (ctx) => AlertDialog(
+                        content: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            TextButton(
+                                onPressed: () {
+                                  voidfuncationClass().customBottomSheet(
+                                      context,
+                                      chat[index].msgId.toString(),
+                                      chat[index].message.toString());
+                                },
+                                child: const Text("update")),
+                            TextButton(
+                                onPressed: () {
+                                  provider
+                                      .removemsg(chat[index].msgId.toString());
+                                  Navigator.pop(ctx);
+                                },
+                                child: const Text("delete"))
+                          ],
+                        ),
+                      ),
+                    );
                   },
                   child: Chip(
                     label: Text(chat[index].message.toString()),

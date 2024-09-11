@@ -1,6 +1,5 @@
 import 'package:baatchit/controller/firebase_controller.dart';
 import 'package:baatchit/screen/realtime_chat.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -25,11 +24,8 @@ class _HomeScreenState extends State<HomeScreen> {
     //   chatController.addMsg(data);
     // });
     chatController.fatchMsg();
-    chatController.FatchUpdateData();
-
-    // event.onChildChanged.listen((event) {});
-
-    // event.onChildRemoved.listen((event) {});
+    chatController.fatchUpdateData();
+    chatController.fatchRemoveData();
   }
 
   @override
