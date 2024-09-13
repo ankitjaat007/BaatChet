@@ -1,4 +1,5 @@
 import 'package:baatchit/controller/firebase_controller.dart';
+import 'package:baatchit/controller/storage_controller.dart';
 import 'package:baatchit/firebase_options.dart';
 import 'package:baatchit/screen/home_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -20,7 +21,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => ChatController())
+        ChangeNotifierProvider(create: (context) => ChatController()),
+        ChangeNotifierProvider(create: (context) => StorageController()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

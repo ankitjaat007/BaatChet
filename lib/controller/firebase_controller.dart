@@ -15,8 +15,8 @@ class FirebaseController {
 }
 
 class ChatController extends ChangeNotifier {
-  final event = FirebaseDatabase.instance.ref("AnkitChats");
-  List<ChatModel> _allMsg = [];
+  final event = FirebaseDatabase.instance.ref("maingroup");
+  final List<ChatModel> _allMsg = [];
   List<ChatModel> get allMsg => _allMsg;
 
 // add msg on firebase me
