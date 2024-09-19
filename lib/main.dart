@@ -1,7 +1,8 @@
+import 'package:baatchit/authentication/login_number.dart';
 import 'package:baatchit/controller/firebase_controller.dart';
 import 'package:baatchit/controller/storage_controller.dart';
 import 'package:baatchit/firebase_options.dart';
-import 'package:baatchit/screen/home_screen.dart';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -32,7 +33,8 @@ class MyApp extends StatelessWidget {
               const AppBarTheme(color: Color.fromARGB(255, 129, 185, 222)),
           scaffoldBackgroundColor: const Color.fromARGB(255, 206, 195, 194),
         ),
-        home: const HomeScreen(),
+        // home: const HomeScreen(),
+        home: const LoginNumber(),
       ),
     );
   }

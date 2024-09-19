@@ -9,13 +9,13 @@ class ChatModel {
   //   };
   // }
 
-  String? message, sender, timestamp, msgId, images;
+  String? message, sender, timestamp, msgId, image;
   ChatModel(
-      {this.message, this.sender, this.timestamp, this.msgId, this.images});
+      {this.message, this.sender, this.timestamp, this.msgId, this.image});
   Map<String, dynamic> tomsg() {
     return {
       "message": message ?? "",
-      "images": images ?? "",
+      "image": image ?? "",
       "sender": "ankit",
       "timestamp": DateTime.now().toIso8601String()
     };
@@ -23,7 +23,7 @@ class ChatModel {
 
   ChatModel.fromchat(Map json, this.msgId)
       : message = json['message'] ?? "",
-        images = json['images'] ?? "",
+        image = json['image'] ?? "",
         sender = json['sender'],
         timestamp = json['timestamp'];
 }

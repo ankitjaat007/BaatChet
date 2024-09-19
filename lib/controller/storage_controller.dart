@@ -7,18 +7,23 @@ import 'package:flutter/material.dart';
 
 class StorageController extends ChangeNotifier {
   // storage instance
-  final event = FirebaseDatabase.instance.ref("maingroup");
   final _storage = FirebaseStorage.instance;
+  // realtime instance
+  final event = FirebaseDatabase.instance.ref("maingroup");
 
-  Future<String?> uploadFile(File image) async {
+  // final _picker = ImagePicker();
+
+  Future<String?> uploadFile(File image,
+      {TextEditingController? msg, String? path}) async {
     String? url;
     try {
-      final fileName = image.path.split("/").last; // "IMG12482.jpg"
-      final reff = _storage.ref("UserImage/$fileName");
+      final fileName = image.path.split("/").last;
+      final reff = _storage.ref(path ?? "maingroupImage/$fileName");
       await reff.putFile(image);
       final url = await reff.getDownloadURL();
+      await event.push().set(ChatModel(image: url, message: msg!.text).tomsg());
+      msg.clear();
 
-      await event.push().set(ChatModel(images: url).tomsg());
       notifyListeners();
     } catch (e) {
       print(e.toString());
@@ -26,14 +31,24 @@ class StorageController extends ChangeNotifier {
     return url;
   }
 
-  uploadMedia(List<File> images) async {
+  void replaceImage(String imagePath, File newImage, String msgId) async {
+    // imagePath = "firebase_storagePath.come/photos/7H698679Y9.jpg"
+
     try {
-      for (var img in images) {
-        final url = await uploadFile(img);
-        if (url != null) {
-          // TODO; SAVE THIS URL AS PER YOUR REQUIRMENTS
-        }
-      }
-    } catch (e) {}
+      final imageName = imagePath.split("/").last;
+      final url = uploadFile(newImage, path: "Photos/$imageName");
+      event.child(msgId).update(ChatModel(image: await url).tomsg());
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  void removeImage(String path) async {
+    try {
+      final imageReff = _storage.ref(path);
+      await imageReff.delete();
+    } catch (e) {
+      print(e.toString());
+    }
   }
 }

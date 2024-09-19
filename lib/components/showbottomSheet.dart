@@ -2,6 +2,7 @@ import 'package:baatchit/controller/firebase_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+// ignore: camel_case_types
 class voidfuncationClass {
   void customBottomSheet(BuildContext context, String chatId, String msg) {
     final provider = Provider.of<ChatController>(context, listen: false);
