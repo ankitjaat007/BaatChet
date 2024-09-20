@@ -1,20 +1,20 @@
 import 'package:baatchit/controller/auth/phn_number_controller.dart';
 import 'package:flutter/material.dart';
 
-class LoginNumber extends StatelessWidget {
-  LoginNumber({super.key});
-  final number = TextEditingController();
+class OtpVerify extends StatelessWidget {
+  OtpVerify({super.key});
+  final otp = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Login with phone number"),
+        title: Text("otp verify"),
       ),
       body: ListView(
         padding: EdgeInsets.all(20),
         children: [
           TextField(
-              controller: number,
+              controller: otp,
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
                 prefixIconColor: Colors.black,
@@ -22,7 +22,7 @@ class LoginNumber extends StatelessWidget {
                 fillColor: Colors.white,
                 filled: true,
                 prefixIcon: const Icon(Icons.phone_android),
-                hintText: 'Phone number',
+                hintText: 'OTP',
                 focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
                     borderSide: const BorderSide(color: Colors.white)),
@@ -35,9 +35,9 @@ class LoginNumber extends StatelessWidget {
           ),
           ElevatedButton(
               onPressed: () {
-                PhnNumberController().verifyPhoneNumber(number.text, context);
+                PhnNumberController().verifyOtp(otp.text, context);
               },
-              child: Text("Send otp"))
+              child: Text("Submit"))
         ],
       ),
     );

@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
           scaffoldBackgroundColor: const Color.fromARGB(255, 206, 195, 194),
         ),
         // home: const HomeScreen(),
-        home: const LoginNumber(),
+        home: LoginNumber(),
       ),
     );
   }

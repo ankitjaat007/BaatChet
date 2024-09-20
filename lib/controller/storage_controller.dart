@@ -45,7 +45,7 @@ class StorageController extends ChangeNotifier {
 
   void removeImage(String path) async {
     try {
-      final imageReff = _storage.ref(path);
+      final imageReff = _storage.refFromURL(path);
       await imageReff.delete();
     } catch (e) {
       print(e.toString());

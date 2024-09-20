@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "118345968924",
+    "firebase_url": "https://baatchet-fd545-default-rtdb.firebaseio.com",
     "project_id": "baatchet-fd545",
     "storage_bucket": "baatchet-fd545.appspot.com"
   },
@@ -10,6 +11,63 @@
         "mobilesdk_app_id": "1:118345968924:android:cf3555ebbbf17f18cd5ed9",
         "android_client_info": {
           "package_name": "com.example.baatchit"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAmtDgA0lTkFdVvJXEcy0jJC7Wcq7gY5ao"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:118345968924:android:9587c098ddefa90ccd5ed9",
+        "android_client_info": {
+          "package_name": "com.example.baatein"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAmtDgA0lTkFdVvJXEcy0jJC7Wcq7gY5ao"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:118345968924:android:87852f78baf485e6cd5ed9",
+        "android_client_info": {
+          "package_name": "com.example.chat_apps"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAmtDgA0lTkFdVvJXEcy0jJC7Wcq7gY5ao"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:118345968924:android:dae80c96544c6976cd5ed9",
+        "android_client_info": {
+          "package_name": "com.example.chatkro"
         }
       },
       "oauth_client": [],
