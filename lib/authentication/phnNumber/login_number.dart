@@ -1,11 +1,15 @@
 import 'package:baatchit/controller/auth/phn_number_controller.dart';
+import 'package:baatchit/controller/circleAvtar_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class LoginNumber extends StatelessWidget {
   LoginNumber({super.key});
   final number = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    final provider =
+        Provider.of<CircularProgressIndicatorController>(context).loding;
     return Scaffold(
       appBar: AppBar(
         title: Text("Login with phone number"),
@@ -30,14 +34,12 @@ class LoginNumber extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10),
                     borderSide: const BorderSide(color: Colors.white)),
               )),
-          SizedBox(
-            height: 30,
-          ),
+          SizedBox(height: 30),
           ElevatedButton(
               onPressed: () {
                 PhnNumberController().verifyPhoneNumber(number.text, context);
               },
-              child: Text("Send otp"))
+              child: provider ? CircularProgressIndicator() : Text("Send otp"))
         ],
       ),
     );

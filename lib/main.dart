@@ -1,4 +1,7 @@
-import 'package:baatchit/authentication/login_number.dart';
+import 'package:baatchit/authentication/gmail_and_password/gmail_login.dart';
+import 'package:baatchit/authentication/gmail_and_password/gmail_signup.dart';
+import 'package:baatchit/authentication/phnNumber/login_number.dart';
+import 'package:baatchit/controller/circleAvtar_controller.dart';
 import 'package:baatchit/controller/firebase_controller.dart';
 import 'package:baatchit/controller/storage_controller.dart';
 import 'package:baatchit/firebase_options.dart';
@@ -24,6 +27,8 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (context) => ChatController()),
         ChangeNotifierProvider(create: (context) => StorageController()),
+        ChangeNotifierProvider(
+            create: (context) => CircularProgressIndicatorController()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -34,7 +39,9 @@ class MyApp extends StatelessWidget {
           scaffoldBackgroundColor: const Color.fromARGB(255, 206, 195, 194),
         ),
         // home: const HomeScreen(),
-        home: LoginNumber(),
+        // home: LoginNumber(),
+        // home: GmailSignup(),
+        home: GmailLogin(),
       ),
     );
   }
