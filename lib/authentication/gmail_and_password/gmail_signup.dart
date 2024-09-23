@@ -1,4 +1,6 @@
 import 'package:baatchit/components/coman_textField.dart';
+import 'package:baatchit/controller/auth/gmail_password_controller.dart';
+import 'package:baatchit/model/user_model.dart';
 import 'package:flutter/material.dart';
 
 class GmailSignup extends StatelessWidget {
@@ -39,7 +41,17 @@ class GmailSignup extends StatelessWidget {
           const SizedBox(
             height: 10,
           ),
-          ElevatedButton(onPressed: () {}, child: const Text("SignUp"))
+          ElevatedButton(
+              onPressed: () {
+                GmailPasswordController().signup(
+                  Usermodel(
+                      email: gmailcontroller.text, name: namecontroller.text),
+                  passwordcontroller.text,
+                );
+              },
+              child:
+                  //  loder ? CircularProgressIndicator() :
+                  Text("SignUp"))
         ],
       ),
     );
