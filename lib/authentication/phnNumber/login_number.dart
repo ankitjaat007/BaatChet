@@ -1,5 +1,5 @@
 import 'package:baatchit/controller/auth/phn_number_controller.dart';
-import 'package:baatchit/controller/circleAvtar_controller.dart';
+import 'package:baatchit/controller/circularProgressIndicator_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -12,10 +12,10 @@ class LoginNumber extends StatelessWidget {
         Provider.of<CircularProgressIndicatorController>(context).loding;
     return Scaffold(
       appBar: AppBar(
-        title: Text("Login with phone number"),
+        title: const Text("Login with phone number"),
       ),
       body: ListView(
-        padding: EdgeInsets.all(20),
+        padding: const EdgeInsets.all(20),
         children: [
           TextField(
               controller: number,
@@ -34,7 +34,7 @@ class LoginNumber extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10),
                     borderSide: const BorderSide(color: Colors.white)),
               )),
-          SizedBox(height: 30),
+          const SizedBox(height: 30),
           ElevatedButton(
               onPressed: () {
                 PhnNumberController().verifyPhoneNumber(number.text, context);

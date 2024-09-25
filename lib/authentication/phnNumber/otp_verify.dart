@@ -1,11 +1,15 @@
 import 'package:baatchit/controller/auth/phn_number_controller.dart';
+import 'package:baatchit/controller/circularProgressIndicator_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class OtpVerify extends StatelessWidget {
   OtpVerify({super.key});
   final otp = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    final provider =
+        Provider.of<CircularProgressIndicatorController>(context).loding;
     return Scaffold(
       appBar: AppBar(
         title: Text("otp verify"),
@@ -37,7 +41,7 @@ class OtpVerify extends StatelessWidget {
               onPressed: () {
                 PhnNumberController().verifyOtp(otp.text, context);
               },
-              child: Text("Submit"))
+              child: provider ? CircularProgressIndicator() : Text("Submit"))
         ],
       ),
     );

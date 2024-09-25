@@ -1,7 +1,9 @@
 import 'package:baatchit/components/coman_textField.dart';
 import 'package:baatchit/controller/auth/gmail_password_controller.dart';
+import 'package:baatchit/controller/circularProgressIndicator_controller.dart';
 import 'package:baatchit/model/user_model.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class GmailSignup extends StatelessWidget {
   GmailSignup({super.key});
@@ -10,6 +12,8 @@ class GmailSignup extends StatelessWidget {
   final passwordcontroller = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    final loder =
+        Provider.of<CircularProgressIndicatorController>(context).loding;
     return Scaffold(
       appBar: AppBar(
         title: const Text("gmial sign up"),
@@ -42,16 +46,17 @@ class GmailSignup extends StatelessWidget {
             height: 10,
           ),
           ElevatedButton(
-              onPressed: () {
-                GmailPasswordController().signup(
-                  Usermodel(
-                      email: gmailcontroller.text, name: namecontroller.text),
-                  passwordcontroller.text,
-                );
-              },
-              child:
-                  //  loder ? CircularProgressIndicator() :
-                  Text("SignUp"))
+              onPressed: loder
+                  ? null
+                  : () {
+                      GmailPasswordController().signup(
+                          Usermodel(
+                              email: gmailcontroller.text,
+                              name: namecontroller.text),
+                          passwordcontroller.text,
+                          context);
+                    },
+              child: loder ? CircularProgressIndicator() : Text("SignUp"))
         ],
       ),
     );

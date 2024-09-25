@@ -41,8 +41,12 @@ android {
             signingConfig = signingConfigs.debug
         }
     }
+
+
 }
 
 flutter {
     source = "../.."
 }
+
+dependencies { implementation 'com.google.firebase:firebase-appcheck-safetynet:16.0.0' }
