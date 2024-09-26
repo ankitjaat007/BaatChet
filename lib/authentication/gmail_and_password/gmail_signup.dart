@@ -1,3 +1,4 @@
+import 'package:baatchit/authentication/gmail_and_password/gmail_login.dart';
 import 'package:baatchit/components/coman_textField.dart';
 import 'package:baatchit/controller/auth/gmail_password_controller.dart';
 import 'package:baatchit/controller/circularProgressIndicator_controller.dart';
@@ -15,7 +16,16 @@ class GmailSignup extends StatelessWidget {
     final loder =
         Provider.of<CircularProgressIndicatorController>(context).loding;
     return Scaffold(
+      floatingActionButton: CircleAvatar(
+          radius: 40,
+          child: TextButton(
+              onPressed: () {
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (context) => GmailLogin()));
+              },
+              child: const Text("Login"))),
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: const Text("gmial sign up"),
       ),
       body: ListView(

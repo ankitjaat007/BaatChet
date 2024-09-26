@@ -1,3 +1,5 @@
+import 'package:baatchit/authentication/gmail_and_password/verification_email.dart';
+import 'package:baatchit/authentication/wrapper_screen.dart';
 import 'package:baatchit/controller/circularProgressIndicator_controller.dart';
 import 'package:baatchit/model/user_model.dart';
 import 'package:baatchit/screen/home_screen.dart';
@@ -21,8 +23,8 @@ class GmailPasswordController {
       final uid = credintal.user!.uid;
       await db.add(user.tomap(uid));
       Utils.tostmsg("create account succes");
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => HomeScreen()));
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => VerificationEmail()));
     } catch (e) {
       Utils.tostmsg(e.toString());
     } finally {
@@ -39,11 +41,35 @@ class GmailPasswordController {
           email: user.email!, password: password);
       Utils.tostmsg("login succes");
       Navigator.push(
-          context, MaterialPageRoute(builder: (context) => HomeScreen()));
+          context, MaterialPageRoute(builder: (context) => WrapperScreen()));
     } catch (e) {
       Utils.tostmsg(e.toString());
     } finally {
       loder.setloding(false);
+    }
+  }
+
+  signout(BuildContext context, String userId) {
+    try {
+      _auth.signOut().then((value) {
+        Utils.tostmsg("logOut succes");
+
+        // db.doc(userId).delete();
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (context) => WrapperScreen()),
+            (route) => false);
+      });
+    } catch (e) {
+      Utils.tostmsg(e.toString());
+    }
+  }
+
+  Future<void> emailVerifiedLink() async {
+    try {
+      await _auth.currentUser!.sendEmailVerification();
+    } catch (e) {
+      // Utils.tostmsg(e.toString());
+      rethrow;
     }
   }
 }

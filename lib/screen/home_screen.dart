@@ -1,5 +1,7 @@
+import 'package:baatchit/controller/auth/gmail_password_controller.dart';
 import 'package:baatchit/controller/firebase_controller.dart';
 import 'package:baatchit/screen/realtime_chat.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -28,10 +30,20 @@ class _HomeScreenState extends State<HomeScreen> {
     chatController.fatchRemoveData();
   }
 
+  final _auth = FirebaseAuth.instance.currentUser!.email;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        actions: [
+          Text(_auth.toString()),
+          IconButton(
+              onPressed: () {
+                GmailPasswordController().signout(context, "");
+              },
+              icon: Icon(Icons.exit_to_app))
+        ],
         title: const Text("BaatChet"),
       ),
       body: ListView(
