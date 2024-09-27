@@ -18,7 +18,7 @@ class _VerificationEmailState extends State<VerificationEmail> {
   @override
   void initState() {
     super.initState();
-    _auth.emailVerifiedLink();
+    _auth.currentUserEmailVerifiedLink();
     timer = Timer.periodic(Duration(seconds: 5), (timer) {
       FirebaseAuth.instance.currentUser!.reload();
       if (FirebaseAuth.instance.currentUser!.emailVerified == true) {
@@ -50,7 +50,7 @@ class _VerificationEmailState extends State<VerificationEmail> {
               const Text("We have a send to email for verification"),
               ElevatedButton(
                   onPressed: () {
-                    _auth.emailVerifiedLink();
+                    // _auth.emailVerifiedLink();
                   },
                   child: Text("resend")),
               IconButton(

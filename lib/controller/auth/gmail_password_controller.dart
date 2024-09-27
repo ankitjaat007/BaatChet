@@ -64,12 +64,22 @@ class GmailPasswordController {
     }
   }
 
-  Future<void> emailVerifiedLink() async {
+  Future<void> currentUserEmailVerifiedLink() async {
     try {
       await _auth.currentUser!.sendEmailVerification();
     } catch (e) {
       // Utils.tostmsg(e.toString());
-      rethrow;
+      // rethrow;
+      print(e.toString());
     }
   }
+
+  // createUserWithEmailVerification() {
+  //   try {
+
+  //     _auth.signInWithEmailLink(email: email, emailLink: emailLink)
+  //   } catch (e) {
+  //     Utils.tostmsg(e.toString());
+  //   }
+  // }
 }

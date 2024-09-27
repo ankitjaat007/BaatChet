@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:baatchit/components/imagePiker.dart';
 import 'package:baatchit/components/showbottomSheet.dart';
 import 'package:baatchit/controller/firebase_controller.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -102,14 +103,32 @@ class _RealtimeChatState extends State<RealtimeChat> {
                         chat[index].message == ""
                             ? const SizedBox()
                             : Text(chat[index].message.toString()),
-                        chat[index].image == ""
+                        chat[index].image == "" && chat[index].image == null
                             ? const SizedBox()
-                            : Image.network(
-                                "${chat[index].image}",
-                                height: 100,
-                                width: 150,
-                                fit: BoxFit.cover,
-                              )
+                            : CachedNetworkImage(
+                                imageUrl: "${chat[index].image}",
+                                imageBuilder: (context, imageProvider) =>
+                                    Container(
+                                  height: 100,
+                                  width: 150,
+                                  decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                      image: imageProvider,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ),
+                                placeholder: (context, url) =>
+                                    const CircularProgressIndicator(),
+                                errorWidget: (context, url, error) =>
+                                    const SizedBox(),
+                              ),
+                        // Image.network(
+                        //     "${chat[index].image}",
+                        //     height: 100,
+                        //     width: 150,
+                        //     fit: BoxFit.cover,
+                        //   )
                       ],
                     ),
                   ),
@@ -133,11 +152,23 @@ class _RealtimeChatState extends State<RealtimeChat> {
                         ),
                         chat[index].image == ""
                             ? const SizedBox()
-                            : Image.network(
-                                "${chat[index].image}",
-                                height: 100,
-                                width: 150,
-                                fit: BoxFit.cover,
+                            : CachedNetworkImage(
+                                imageUrl: "${chat[index].image}",
+                                imageBuilder: (context, imageProvider) =>
+                                    Container(
+                                  height: 100,
+                                  width: 150,
+                                  decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                      image: imageProvider,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ),
+                                placeholder: (context, url) =>
+                                    const CircularProgressIndicator(),
+                                errorWidget: (context, url, error) =>
+                                    const SizedBox(),
                               )
                       ],
                     ),
